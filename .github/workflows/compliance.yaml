@@ -29,5 +29,8 @@ jobs:
             per_page: 1,
             page: 1,
           });
-          console.log(currentPR.data.body);
+          console.log(currentPR);
+          console.log(currentPR.data[0].body);
+          console.log(context.payload.pull_request.body);
+          console.log(context.payload);
 
