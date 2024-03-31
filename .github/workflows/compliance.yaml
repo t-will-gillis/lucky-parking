@@ -1,4 +1,4 @@
-name: Compliance
+name: Compliance cha-ching
 
 on:
   pull_request_target:
