@@ -1,4 +1,4 @@
-name: Compliance
+name: Compliance yeah
 
 on:
   pull_request_target:
