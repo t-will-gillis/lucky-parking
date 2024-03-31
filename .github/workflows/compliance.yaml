@@ -30,7 +30,8 @@ jobs:
           const regex = /(?<!Example\s*)(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/gi;
           const match = prBody.match(regex);
           if (match) {
-            linkNumber = match[2];
+            console.log(match);
+            linkNumber = match[1];
             console.log('Found linked issue #' + linkNumber +'. Checking if legit...');
             const response = await github.rest.issues.get({
               owner: context.repo.owner,
