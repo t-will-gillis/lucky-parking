@@ -31,21 +31,21 @@ jobs:
           if (match) {
             console.log(match);
             linkNumber = match[2];
-            console.log('Found linked issue #' + linkNumber +'. Checking if legit...');
+            console.log('Found issue #' + linkNumber +' linked. Checking if legit...');
             const response = await github.rest.issues.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: linkNumber,
             });
             if (response.status === 200) {
-              console.log('Issue #' + linkNumber + ' found in repo. PR has a properly linked issue.');
+              console.log('Found issue #' + linkNumber + ' in repo. PR has a properly linked issue.');
             } else {
-              console.log('Issue #' + linkNumber + ' does not exist in repo. Posting comment...');
+              console.log('Couldn\'t find issue #' + linkNumber + ' in repo. Posting comment...');
             }
           } else {
             console.log('PR does not have a properly linked issue. Posting comment...');
           }
-          const prComment = `@${prOwner}, this Pull Request is not linked to a valid issue. Please provide a valid issue number in the Description above after "Resolves #"`
+          const prComment = `@${prOwner}, this Pull Request is not linked to a valid issue. Please provide a valid issue number in the Description above, in "Linked Issues", after "Resolves # `;
           github.rest.issues.createComment({
             owner: context.repo.owner,
             repo: context.repo.repo,
