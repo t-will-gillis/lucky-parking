@@ -27,7 +27,7 @@ jobs:
           const prNumber = context.payload.pull_request.number;
           const prOwner = context.payload.pull_request.user.login;
           const keywords = 'close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved';
-          const regex = /(?<!Example\s*)(${keywords})\s+#(\d+)/gi;
+          const regex = /(?<!Example\s*)(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/gi;
           const match = prBody.match(regex);
           if (match) {
             linkNumber = match[2];
@@ -46,7 +46,9 @@ jobs:
             console.log('PR does not have a properly linked issue. Posting comment...');
           }
           const prComment = `@${prOwner}, this Pull Request is not linked to a valid issue. Please provide a valid issue number in the Description above after "Resolves #"`
-          github.issues.createComment({
+          github.rest.issues.createComment({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
             issue_number: prNumber,
             body: prComment,
           });
