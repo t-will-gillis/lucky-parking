@@ -39,7 +39,6 @@ jobs:
             });
             if (response.status === 200) {
               console.log('Issue #' + linkNumber + ' found in repo. PR has a properly linked issue.');
-              break;
             } else {
               console.log('Issue #' + linkNumber + ' does not exist in repo. Posting comment...');
             }
