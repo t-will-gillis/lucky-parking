@@ -27,7 +27,7 @@ jobs:
           const prNumber = context.payload.pull_request.number;
           const prOwner = context.payload.pull_request.user.login;
           const keywords = 'close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved';
-          const regex = /(?<!Example\s*)(${keywords})\s+#(\d+)/gi;
+          const regex = new RegExp(`(?<!Example\\s*)(${keywords})\\s+#(\\d+)`, 'i');
           const match = prBody.match(regex);
           if (match) {
             console.log(match);
