@@ -38,6 +38,7 @@ jobs:
               repo: context.repo.repo,
               issue_number: linkNumber,
             });
+            console.log(response);
             console.log('************** ' + response.status);
             if (response.status === 200) {
               console.log('Found an issue: \'#' + linkNumber + '\' in repo. Confirmed for a legitimate linked issue.');
