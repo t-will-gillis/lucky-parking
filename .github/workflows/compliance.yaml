@@ -45,7 +45,7 @@ jobs:
                 repo: context.repo.repo,
                 issue_number: linkNumber,
               });
-              console.log('Found an issue: \'#' + linkNumber + '\' in repo. Confirmed for a legitimate linked issue.');
+              console.log('Found an issue: \'#' + linkNumber + '\' in repo. Reference is a legitimate linked issue.');
             }
             catch (error) {
               console.log('Couldn\'t find issue #' + linkNumber + ' in repo. Posting comment...');
