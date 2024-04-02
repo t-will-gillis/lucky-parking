@@ -29,6 +29,7 @@ jobs:
           const regex = /(?<!Example:\s*)(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/i;
           const match = prBody.match(regex);
           let commentFlag = false;
+          console.log(match);
           if (match) {
             keyword = match[1];
             linkNumber = match[2];
