@@ -29,16 +29,16 @@ jobs:
           const regex = /(?<!Example:\s*)(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/i;
           const match = prBody.match(regex);
           let prComment;
-          console.log(prComment);
-          console.log('****');
-          console.log(match);
-          if (match == null) {
-            prComment = `@${prOwner}, this Pull Request is not linked to a valid issue. Please provide a valid linked issue "Linked Issues" above, in the format of "Resolves #" + issue number.`;
+
+          if (!match) {
+            console.log('PR does not have a properly linked issue. Posting comment...');
+            prComment = `@${prOwner}, this Pull Request is not linked to a valid issue. Please provide a valid linked issue in "Related Issues" above, using the format of "Resolves #" + issue number.`;
           }
-          if (match) {
-            keyword = match[1];
-            linkNumber = match[2];
-            console.log('Found a keyword: \'' + keyword + '\'. Checking for legitimate linked issue…');
+
+          else {
+            let [ , keyword, linkNumber ] = match;
+            console.log('Found a keyword: \'' + keyword + '\'. Checking for legitimate linked issue...');
+            
             try {
               const response = await github.rest.issues.get({
                 owner: context.repo.owner,
@@ -46,16 +46,15 @@ jobs:
                 issue_number: linkNumber,
               });
               console.log('Found an issue: \'#' + linkNumber + '\' in repo. Confirmed for a legitimate linked issue.');
-            } catch (error) {
-              console.log('Couldn\'t find issue #' + linkNumber + ' in repo. Posting comment...');
-              commentFlag = true;
             }
-          } else {
-            console.log('PR does not have a properly linked issue. Posting comment...');
-            commentFlag = true;
+            catch (error) {
+              console.log('Couldn\'t find issue #' + linkNumber + ' in repo. Posting comment...');
+              prComment = `@${prOwner}, the issue number referenced above in \"' + keyword + ' #' + linkNumber + '\" is not found. Please replace with a valid issue number.`;
+            }
+
           }
-          if (commentFlag) {
-            const prComment = `@${prOwner}, this Pull Request is not linked to a valid issue. Please provide a valid linked issue "Linked Issues" above, in the format of "Resolves #" + issue number.`;
+
+          if (prComment) {
             github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -63,4 +62,3 @@ jobs:
               body: prComment,
             });
           }
-          
