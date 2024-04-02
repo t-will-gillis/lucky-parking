@@ -28,8 +28,13 @@ jobs:
           const prOwner = context.payload.pull_request.user.login;
           const regex = /(?<!Example:\s*)(close|closes|closed|fix|fixes|fixed|resolve|resolves|resolved)\s+#(\d+)/i;
           const match = prBody.match(regex);
-          let commentFlag = false;
+          let prComment;
+          console.log(prComment);
+          console.log('****');
           console.log(match);
+          if (match == null) {
+            prComment = `@${prOwner}, this Pull Request is not linked to a valid issue. Please provide a valid linked issue "Linked Issues" above, in the format of "Resolves #" + issue number.`;
+          }
           if (match) {
             keyword = match[1];
             linkNumber = match[2];
