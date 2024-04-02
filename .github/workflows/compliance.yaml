@@ -49,7 +49,7 @@ jobs:
             }
             catch (error) {
               console.log('Couldn\'t find issue #' + linkNumber + ' in repo. Posting comment...');
-              prComment = `@${prOwner}, the issue number referenced above in \"' + keyword + ' #' + linkNumber + '\" is not found. Please replace with a valid issue number.`;
+              prComment = `@${prOwner}, the issue number referenced above in "' + keyword + ' #' + linkNumber + '" is not found. Please replace with a valid issue number.`;
             }
 
           }
